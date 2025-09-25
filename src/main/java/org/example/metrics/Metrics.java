@@ -1,4 +1,4 @@
-package org.example.metric;
+package org.example.metrics;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
