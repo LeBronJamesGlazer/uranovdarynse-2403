@@ -1,6 +1,9 @@
 package org.example.algos;
 
 import org.example.metrics.Metrics;
+import org.example.utils.util;
+
+import java.util.Arrays;
 
 public class MergeSort {
 
@@ -14,14 +17,13 @@ public class MergeSort {
     }
 
     public void sort(int[] array) {
-        if (array == null || array.length <= 1) return;
+        util.checkArray(array); // guard clause
         buffer = new int[array.length];
         metrics.start();
         mergeSort(array, 0, array.length - 1, 1);
         metrics.stop();
     }
 
-    // Recursive MergeSort
     private void mergeSort(int[] array, int left, int right, int depth) {
         metrics.updateDepth(depth);
 
@@ -36,7 +38,6 @@ public class MergeSort {
         merge(array, left, mid, right);
     }
 
-    // Merge two sorted halves
     private void merge(int[] array, int left, int mid, int right) {
         System.arraycopy(array, left, buffer, left, right - left + 1);
         metrics.incAllocations();
@@ -46,18 +47,14 @@ public class MergeSort {
         int k = left;
 
         while (i <= mid && j <= right) {
-            metrics.incCounter(); // counting comparisons
-            if (buffer[i] <= buffer[j]) {
-                array[k++] = buffer[i++];
-            } else {
-                array[k++] = buffer[j++];
-            }
+            metrics.incCounter();
+            if (buffer[i] <= buffer[j]) array[k++] = buffer[i++];
+            else array[k++] = buffer[j++];
         }
         while (i <= mid) array[k++] = buffer[i++];
         while (j <= right) array[k++] = buffer[j++];
     }
 
-    // Insertion sort for small arrays
     private void insertionSort(int[] array, int left, int right) {
         for (int i = left + 1; i <= right; i++) {
             int key = array[i];
