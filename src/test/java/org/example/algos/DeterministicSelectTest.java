@@ -10,7 +10,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SelectTest {
+class DeterministicSelectTest {
 
     @Test
     void testSmallArrayAllK() throws Exception {
