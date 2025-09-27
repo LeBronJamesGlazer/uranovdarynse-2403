@@ -31,7 +31,7 @@ public class QuickSort {
         util.swap(array, pivotIndex, high);
         metrics.incAllocations();
 
-        int pivotFinal = util.partition(array, low, high);
+        int pivotFinal = util.partition(array, low, high, metrics);
 
         // Smaller-first recursion
         if (pivotFinal - low < high - pivotFinal) {

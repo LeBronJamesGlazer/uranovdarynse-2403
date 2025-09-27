@@ -23,11 +23,12 @@ public class Metrics {
 
     public void start() {
         reset();
-        startTime = System.nanoTime();  // start measuring runtime
+        startTime = System.nanoTime();
     }
 
     public void stop() {
-        runTime = System.nanoTime() - startTime;  // calculate runtime
+        long durationNs = System.nanoTime() - startTime;
+        runTime = durationNs / 1_000_000;
     }
 
     public void reset() {
@@ -43,10 +44,6 @@ public class Metrics {
 
     public void updateDepth(long depth) {
         maxDepth.accumulateAndGet(depth, Math::max);  // keep max depth
-    }
-
-    public void addCustom(String key, long delta) {
-        custom.computeIfAbsent(key, k -> new AtomicLong(0)).addAndGet(delta);
     }
 
     public String getAlgorithmName() { return algorithmName; }
@@ -68,7 +65,7 @@ public class Metrics {
                 ", counter=" + getCounter() +
                 ", allocations=" + getAllocations() +
                 ", maxDepth=" + getMaxDepth() +
-                ", runTime(ns)=" + getRunTime() +
+                ", runTime(ms)=" + getRunTime() +
                 ", custom=" + getCustom() +
                 '}';
     }

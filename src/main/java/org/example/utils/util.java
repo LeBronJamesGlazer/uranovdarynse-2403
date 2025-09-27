@@ -1,5 +1,7 @@
 package org.example.utils;
 
+import org.example.metrics.Metrics;
+
 import java.util.Random;
 
 public class util {
@@ -39,7 +41,7 @@ public class util {
      * Places elements <= pivot to left, > pivot to right.
      * Returns the final pivot index.
      */
-    public static int partition(int[] array, int low, int high) {
+    public static int partition(int[] array, int low, int high, Metrics metrics) {
         if (array == null) throw new IllegalArgumentException("Array cannot be null");
         if (low < 0 || high >= array.length || low > high)
             throw new IllegalArgumentException("Invalid low/high indices");
@@ -48,6 +50,7 @@ public class util {
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
+            metrics.incCounter();
             if (array[j] <= pivot) {
                 i++;
                 swap(array, i, j);
